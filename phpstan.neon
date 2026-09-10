@@ -1,0 +1,15 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+        - routes/
+        - database/
+
+    # Level 5 direkomendasikan untuk awal proyek, tingkatkan bertahap hingga level 9
+    level: 5
+    
+    # Abaikan error spesifik jika diperlukan
+    # ignoreErrors:
+    #     - '#Unsafe usage of new static#'
