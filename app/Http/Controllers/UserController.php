@@ -21,7 +21,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'password' => Hash::make($request->password),
+            'password_hash' => Hash::make($request->password),
             'account_status' => 'active',
         ]);
 
@@ -38,7 +38,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => ['required|email'],
+            'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
