@@ -10,4 +10,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::Post('/profile', [UserController::class, 'profile']);
     Route::Post('/logout', [UserController::class, 'logout']);
 });
-

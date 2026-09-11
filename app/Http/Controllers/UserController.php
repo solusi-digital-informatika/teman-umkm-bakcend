@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -14,7 +15,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'phone' => ['required', 'string', 'max:20', 'unique:users,phone'],
-            'password' => ['required', 'confirmed', Password::defaults()], 
+            'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 
         $user = User::create([
@@ -44,7 +45,7 @@ class UserController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password_hash)) {
+        if (! $user || ! Hash::check($request->password, $user->password_hash)) {
             return response()->json([
                 'message' => 'Email atau Password Salah',
             ], 401);
@@ -60,7 +61,8 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
@@ -68,7 +70,8 @@ class UserController extends Controller
         ], 200);
     }
 
-    public function profile(Request $request) {
+    public function profile(Request $request)
+    {
         return response()->json([
             'message' => 'Profile Berhasil',
             'user' => $request->user(),
