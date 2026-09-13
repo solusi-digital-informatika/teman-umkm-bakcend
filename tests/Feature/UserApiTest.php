@@ -2,9 +2,8 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserApiTest extends TestCase
@@ -22,16 +21,16 @@ class UserApiTest extends TestCase
         ]);
 
         $response->assertStatus(201)
-                 ->assertJsonStructure([
-                     'message',
-                     'access_token',
-                     'token_type',
-                     'user' => ['id', 'name', 'email', 'phone']
-                 ]);
+            ->assertJsonStructure([
+                'message',
+                'access_token',
+                'token_type',
+                'user' => ['id', 'name', 'email', 'phone'],
+            ]);
 
         $this->assertDatabaseHas('users', [
             'email' => 'budi@example.com',
-            'phone' => '08123456789'
+            'phone' => '08123456789',
         ]);
     }
 
@@ -50,9 +49,9 @@ class UserApiTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonFragment([
-                     'email' => ['The email has already been taken.']
-                 ]);
+            ->assertJsonFragment([
+                'email' => ['The email has already been taken.'],
+            ]);
     }
 
     public function test_user_can_not_register_with_same_phone(): void
@@ -70,8 +69,8 @@ class UserApiTest extends TestCase
         ]);
 
         $response->assertStatus(422)
-                 ->assertJsonFragment([
-                     'phone' => ['The phone has already been taken.']
-                 ]);
+            ->assertJsonFragment([
+                'phone' => ['The phone has already been taken.'],
+            ]);
     }
 }
