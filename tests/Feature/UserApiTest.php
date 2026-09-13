@@ -37,7 +37,6 @@ class UserApiTest extends TestCase
 
     public function test_user_can_not_register_with_same_email(): void
     {
-        // Buat user terlebih dahulu agar email sudah terdaftar di database
         User::factory()->create([
             'email' => 'budi@example.com',
         ]);
@@ -45,7 +44,7 @@ class UserApiTest extends TestCase
         $response = $this->postJson('/api/register', [
             'name' => 'Budi Santoso',
             'email' => 'budi@example.com',
-            'phone' => '08129999999', // Gunakan nomor berbeda agar validasi email yang terpicu
+            'phone' => '08129999999',
             'password' => 'password123',
             'password_confirmation' => 'password123',
         ]);
@@ -64,7 +63,7 @@ class UserApiTest extends TestCase
 
         $response = $this->postJson('/api/register', [
             'name' => 'Budi Santoso',
-            'email' => 'budi_lain@example.com', // Gunakan email berbeda agar validasi phone yang terpicu
+            'email' => 'budi_lain@example.com',
             'phone' => '08123456789',
             'password' => 'password123',
             'password_confirmation' => 'password123',
