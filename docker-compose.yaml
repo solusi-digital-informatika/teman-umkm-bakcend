@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: umkm_app
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - db
+    networks:
+      - umkm_network
+
+  db:
+    image: postgres:15-alpine
+    container_name: umkm_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-laravel}
+      POSTGRES_USER: ${DB_USERNAME:-root}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - umkm_network
+
+networks:
+  umkm_network:
+    driver: bridge
+
+volumes:
+  db_data:
